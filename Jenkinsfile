@@ -34,6 +34,19 @@ pipeline {
         // //     }
         // // }
 
+        stage("Checking Triggered Repo"){
+            steps {
+                script {
+                    def commit = checkout scm
+                    // we set BRANCH_NAME to make when { branch } syntax work without multibranch job
+                    env.BranchName = commit.GIT_BRANCH.replace('origin/', '')
+
+                    //actually build ....
+                    echo "Got this branch Name : " + env.BranchName
+                }
+            }    
+        } // Check stage 
+
         stage('Call groovy script') {
             steps {
                 script {
